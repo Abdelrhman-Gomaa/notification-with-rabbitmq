@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/register-service/src",
+  "monorepo": true,
+  "root": "apps/register-service",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/register-service/tsconfig.app.json"
+  },
+  "projects": {
+    "register-service": {
+      "type": "application",
+      "root": "apps/register-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/register-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/register-service/tsconfig.app.json"
+      }
+    },
+    "rabbitmq-config": {
+      "type": "application",
+      "root": "apps/rabbitmq-config",
+      "entryFile": "main",
+      "sourceRoot": "apps/rabbitmq-config/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/rabbitmq-config/tsconfig.app.json"
+      }
+    },
+    "mail-mockup": {
+      "type": "application",
+      "root": "apps/mail-mockup",
+      "entryFile": "main",
+      "sourceRoot": "apps/mail-mockup/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/mail-mockup/tsconfig.app.json"
+      }
+    },
+    "sms-mockup": {
+      "type": "application",
+      "root": "apps/sms-mockup",
+      "entryFile": "main",
+      "sourceRoot": "apps/sms-mockup/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/sms-mockup/tsconfig.app.json"
+      }
+    },
+    "shared": {
+      "type": "application",
+      "root": "apps/shared",
+      "entryFile": "main",
+      "sourceRoot": "apps/shared/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/shared/tsconfig.app.json"
+      }
+    },
+    "_common": {
+      "type": "library",
+      "root": "libs/_common",
+      "entryFile": "index",
+      "sourceRoot": "libs/_common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/_common/tsconfig.lib.json"
+      }
+    }
+  }
+}
