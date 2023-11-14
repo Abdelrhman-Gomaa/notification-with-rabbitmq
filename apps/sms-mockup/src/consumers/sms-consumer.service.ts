@@ -11,7 +11,7 @@ export class SmsConsumerService implements OnModuleInit {
 
 	onModuleInit(): void {
 		console.log('>>>>>>>> prot 3002');
-		this.startConsuming();
+		this.startConsumingTestMessage();
 	}
 
 	async startConsuming(): Promise<void> {
@@ -22,6 +22,22 @@ export class SmsConsumerService implements OnModuleInit {
 			await this.rabbitmqService.consumeMessages('mobile_sms_queue', async (message) => {
 				const msg = JSON.parse(message);
 				console.log('>>>>>>>> sms', msg.content);
+			});
+		} catch (error) {
+			console.log('>>>>>>>> startConsuming', error);
+			this.isConnected = false;
+			setTimeout(() => this.startConsuming(), 5000);
+			// throw error
+		}
+	}
+
+	async startConsumingTestMessage(): Promise<void> {
+		try {
+			await this.rabbitmqService.connect();
+			this.isConnected = true;
+			// let notificationPayload
+			await this.rabbitmqService.consumeMessages('test-queue', async (message) => {
+				console.log('>>>>>>>> test message', message);
 			});
 		} catch (error) {
 			console.log('>>>>>>>> startConsuming', error);

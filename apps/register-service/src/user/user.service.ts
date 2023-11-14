@@ -57,4 +57,16 @@ export class UserService implements OnModuleInit {
     };
   }
 
+  async sendMessageInQueueWithPriority2() {
+    // for (let i = 0; i < 100; i++) {
+    // await this.rabbitmqService.publishMessage(`this message number ${i} with priority 2`, "otp", "test-queue", 2);
+    // }
+    await this.rabbitmqService.publishMessage(`this message with priority 2`, "test", "test-queue", 2);
+    console.log('this message with priority 2');
+  }
+
+  async sendMessageInQueueWithPriority1() {
+    await this.rabbitmqService.publishMessage(`this message with priority 1`, "test", "test-queue", 1);
+    console.log('this message with priority 1');
+  }
 }

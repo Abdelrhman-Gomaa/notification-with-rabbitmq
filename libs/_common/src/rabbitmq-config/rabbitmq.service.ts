@@ -22,8 +22,8 @@ export class RabbitMQService {
       this.channel = await this.connection.createChannel();
       await this.channel.assertExchange(rabbitmqConfig.exchange, 'direct', { durable: true });
       rabbitmqConfig.queues.map(async queue => {
-        await this.channel.assertQueue(queue.name, { durable: true });
-        await this.channel.bindQueue(queue.name, rabbitmqConfig.exchange, queue.routingKey);
+        await this.channel.assertQueue(queue.name, { durable: true, maxPriority: 10 });
+        await this.channel.bindQueue(queue.name, rabbitmqConfig.exchange, queue.routingKey, { 'x-max-priority': 10 });
       });
       Logger.log('RabbitMQ connection is initialized ...');
     } catch (error) {
@@ -32,13 +32,13 @@ export class RabbitMQService {
     }
   }
 
-  async publishMessage(message: string, routingKey: string, queue: string): Promise<void> {
+  async publishMessage(message: string, routingKey: string, queue: string, priority?): Promise<void> {
     try {
       if (!this.channel) this.channel = await this.connection.createChannel();
       await this.channel.assertExchange(rabbitmqConfig.exchange, 'direct', { durable: true });
-      if (queue) await this.channel.assertQueue(queue, { durable: true });
+      if (queue) await this.channel.assertQueue(queue, { durable: true, maxPriority: 10 });
       if (queue && routingKey) await this.channel.bindQueue(queue, rabbitmqConfig.exchange, routingKey);
-      await this.channel.publish(rabbitmqConfig.exchange, routingKey, Buffer.from(message));
+      await this.channel.publish(rabbitmqConfig.exchange, routingKey, Buffer.from(message), { priority });
     } catch (error) {
       console.error('An error occurred while publishing a message to RabbitMQ:', error);
       throw error;

@@ -12,6 +12,7 @@ export const rabbitmqConfig = {
   exchange: env.RABBITMQ_EXCHANGE,
   queues: [
     { name: env.RABBITMQ_MAIL_QUEUE, routingKey: env.RABBITMQ_MAIL_ROUTING_KEY },
-    { name: env.RABBITMQ_SMS_QUEUE, routingKey: env.RABBITMQ_SMS_ROUTING_KEY }
+    { name: env.RABBITMQ_SMS_QUEUE, routingKey: env.RABBITMQ_SMS_ROUTING_KEY },
+    { name: 'test-queue', routingKey: 'test' },
   ],
 };

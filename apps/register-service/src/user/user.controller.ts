@@ -8,7 +8,7 @@ import { LoginInput } from './input/login.input';
 export class UserController {
   constructor(private userService: UserService) { }
 
- @Post('/register')
+  @Post('/register')
   async register(@Body() input: CreateUserInput, @Res() res: Response): Promise<Response> {
     try {
       const user = await this.userService.createUser(input);
@@ -21,13 +21,23 @@ export class UserController {
 
   @Post('/login')
   async login(@Body() input: LoginInput, @Res() res: Response): Promise<Response> {
-    try { 
+    try {
       const user = await this.userService.login(input);
       return res.status(201).json({ user });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error });
     }
+  }
+
+  @Post('sendMessage')
+  async sendMessage() {
+    await this.userService.sendMessageInQueueWithPriority2();
+  }
+
+  @Post('sendFirstMessage')
+  async sendMessageWithPriority1() {
+    await this.userService.sendMessageInQueueWithPriority1();
   }
 
 }
