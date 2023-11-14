@@ -62,6 +62,7 @@ export class UserService implements OnModuleInit {
     // await this.rabbitmqService.publishMessage(`this message number ${i} with priority 2`, "otp", "test-queue", 2);
     // }
     await this.rabbitmqService.publishMessage(`this message with priority 2`, "test", "test-queue", 2);
+    await this.rabbitmqService.getQueueLength('test-queue')
     console.log('this message with priority 2');
   }
 

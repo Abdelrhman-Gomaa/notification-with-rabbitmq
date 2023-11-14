@@ -62,4 +62,9 @@ export class RabbitMQService {
       throw error;
     }
   }
+
+  async getQueueLength(queue: string) {
+    const avialbleQueue = await this.channel.checkQueue(queue)
+    console.log(avialbleQueue.messageCount);    
+  }
 }
